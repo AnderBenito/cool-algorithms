@@ -1,23 +1,40 @@
-import { doesNotReject } from "assert";
-import sleep from "../../sleep";
+import { Trace } from "./helpers";
 
-const bubbleSort = async (inputArr: number[]) => {
-	for (let i = 0; i < inputArr.length; i++) {
+const bubbleSort = (inputArr: number[]) => {
+	const animations: Trace[] = [];
+	const copy = [...inputArr];
+
+	animations.push({
+		state: [...copy],
+		compare: [],
+		swap: [],
+	});
+	for (let i = 0; i < copy.length; i++) {
 		let swapped = false;
-		for (let j = 0; j < inputArr.length - i - 1; j++) {
-			if (inputArr[j] > inputArr[j + 1]) {
-				await sleep(10);
+		for (let j = 0; j < copy.length - i - 1; j++) {
+			animations.push({
+				state: [...copy],
+				compare: [j, j + 1],
+				swap: [],
+			});
+			if (copy[j] > copy[j + 1]) {
 				//swap
-
 				swapped = true;
-				let tmp = inputArr[j];
-				inputArr[j] = inputArr[j + 1];
-				inputArr[j + 1] = tmp;
+				let tmp = copy[j];
+				copy[j] = copy[j + 1];
+				copy[j + 1] = tmp;
+
+				//Push to the animations
+				animations.push({
+					state: [...copy],
+					compare: [],
+					swap: [j, j + 1],
+				});
 			}
 		}
 		if (!swapped) break;
 	}
-	return true;
+	return animations;
 };
 
 export default bubbleSort;
