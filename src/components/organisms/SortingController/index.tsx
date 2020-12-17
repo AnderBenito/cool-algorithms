@@ -1,5 +1,8 @@
 import { Button, Container } from "@chakra-ui/react";
 import React from "react";
+import ArrayLengthSelector from "../../molecules/ArrayLengthSelector";
+import PlayControls from "../../molecules/PlayControls";
+import PlaySpeedSelector from "../../molecules/PlaySpeedSelector";
 
 interface Props {
 	onRandomize: any;
@@ -37,37 +40,15 @@ const SortingController: React.FC<Props> = ({
 			>
 				Randomize
 			</Button>
-			<input
-				type="number"
-				onChange={(e) => setNumElem(parseInt(e.target.value))}
-				value={numElem}
+			<ArrayLengthSelector numElem={numElem} setNumElem={setNumElem} />
+			<PlayControls
+				isPlaying={isPlaying}
+				onBack={onBack}
+				onNext={onNext}
+				onPlay={onPlay}
+				onStop={onStop}
 			/>
-			<Button onClick={onBack}>Back</Button>
-			{!isPlaying ? (
-				<Button
-					onClick={() => {
-						onPlay();
-					}}
-				>
-					Play
-				</Button>
-			) : (
-				<Button
-					onClick={() => {
-						onStop();
-					}}
-				>
-					Stop
-				</Button>
-			)}
-			<Button onClick={onNext}>Next</Button>
-			<input
-				type="range"
-				min="1"
-				max="100"
-				value={sortSpeed}
-				onChange={(e) => setSortSpeed(parseInt(e.target.value))}
-			/>
+			<PlaySpeedSelector setSortSpeed={setSortSpeed} sortSpeed={sortSpeed} />
 		</Container>
 	);
 };

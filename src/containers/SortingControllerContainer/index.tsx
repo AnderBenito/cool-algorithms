@@ -24,7 +24,7 @@ const SortingControllerContainer: React.FC<Props> = ({
 	const [step, setStep] = useState<number>(0);
 	const [animations, setAnimations] = useState<Trace[]>([]);
 	const [isPlaying, setIsPlaying] = useState<boolean>(false);
-	const [numElem, setNumElem] = useState<number>(20);
+	const [numElem, setNumElem] = useState<number>(10);
 	const [sortSpeed, setSortSpeed] = useState<number>(5);
 	const intervalId = useRef<NodeJS.Timeout>();
 
