@@ -1,4 +1,3 @@
-import { Button } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import SortingController from "../../components/organisms/SortingController";
 import { Trace } from "../../utils/algorithms/sorting/helpers";
@@ -31,9 +30,8 @@ const SortingControllerContainer: React.FC<Props> = ({
 
 	useEffect(() => {
 		console.log("Mounted");
-		setArray(genArray(numElem));
-		setAnimations(sortingAlgorithm(array));
 
+		generateArray();
 		return () => {
 			clearInterval(intervalId.current!);
 		};
@@ -45,12 +43,17 @@ const SortingControllerContainer: React.FC<Props> = ({
 		}
 	}, [step, animations.length]);
 
-	const onRandomize = (numElem: number) => {
-		setArray(genArray(numElem));
-		setAnimations(sortingAlgorithm(array));
+	const onRandomize = () => {
+		generateArray();
 		setIsPlaying(false);
 		setStep(0);
 		clearInterval(intervalId.current!);
+	};
+
+	const generateArray = () => {
+		let arr = genArray(numElem);
+		setArray(arr);
+		setAnimations(sortingAlgorithm(arr));
 	};
 
 	const onPlay = () => {
