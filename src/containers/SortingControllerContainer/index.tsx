@@ -1,4 +1,7 @@
+import { Button } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
+import SortingController from "../../components/organisms/SortingController";
+import { Trace } from "../../utils/algorithms/sorting/helpers";
 
 interface Props {
 	sortingAlgorithm: any;
@@ -19,43 +22,72 @@ const SortingControllerContainer: React.FC<Props> = ({
 	sortingAlgorithm,
 }) => {
 	const [array, setArray] = useState<number[]>([]);
-	const [isSorting, setIsSorting] = useState<boolean>(false);
-	const [numElem, setNumElem] = useState<number>(50);
+	const [step, setStep] = useState<number>(0);
+	const [animations, setAnimations] = useState<Trace[]>([]);
+	const [isPlaying, setIsPlaying] = useState<boolean>(false);
+	const [numElem, setNumElem] = useState<number>(20);
+	const [sortSpeed, setSortSpeed] = useState<number>(5);
+	const intervalId = useRef<NodeJS.Timeout>();
 
 	useEffect(() => {
+		console.log("Mounted");
 		setArray(genArray(numElem));
-	}, [numElem]);
+		setAnimations(sortingAlgorithm(array));
+
+		return () => {
+			clearInterval(intervalId.current!);
+		};
+	}, []);
 
 	useEffect(() => {
-		if (isSorting) {
-			console.log("start sorting");
-			sortingAlgorithm(array).then((status: boolean) => {
-				setIsSorting(!status);
-				console.log("DONE");
-			});
+		if (step >= animations.length - 1) {
+			clearInterval(intervalId.current!);
 		}
-	}, [array, isSorting, sortingAlgorithm]);
+	}, [step, animations.length]);
 
+	const onRandomize = (numElem: number) => {
+		setArray(genArray(numElem));
+		setAnimations(sortingAlgorithm(array));
+		setIsPlaying(false);
+		setStep(0);
+		clearInterval(intervalId.current!);
+	};
+
+	const onPlay = () => {
+		setIsPlaying(true);
+		intervalId.current = setInterval(() => {
+			setStep((step) => step + 1);
+		}, 50);
+	};
+
+	const onStop = () => {
+		clearInterval(intervalId.current!);
+		setIsPlaying(false);
+	};
+
+	const onNext = () => {
+		setStep((step) => step + 1);
+	};
+	const onBack = () => {
+		if (step > 0) {
+			setStep((step) => step - 1);
+		}
+	};
 	return (
-		<>
-			{render(array, isSorting, setIsSorting)}
-			<button
-				onClick={() => {
-					setArray(genArray(numElem));
-				}}
-			>
-				Randomize
-			</button>
-			<input
-				type="number"
-				onChange={(e) => setNumElem(parseInt(e.target.value))}
-				value={numElem}
-			/>
-			<button disabled={isSorting} onClick={() => setIsSorting(true)}>
-				Sort
-			</button>
-			<button onClick={() => console.log(array)}>View array</button>
-		</>
+		<SortingController
+			onPlay={onPlay}
+			onRandomize={onRandomize}
+			onStop={onStop}
+			onNext={onNext}
+			onBack={onBack}
+			setNumElem={setNumElem}
+			setSortSpeed={setSortSpeed}
+			isPlaying={isPlaying}
+			numElem={numElem}
+			sortSpeed={sortSpeed}
+		>
+			{render(animations, step)}
+		</SortingController>
 	);
 };
 

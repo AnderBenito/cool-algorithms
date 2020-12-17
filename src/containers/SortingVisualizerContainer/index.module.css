@@ -1,0 +1,7 @@
+.visualizerContainer {
+	height: 500px;
+	background-color: #555;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+}

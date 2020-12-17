@@ -1,0 +1,16 @@
+.bar-container {
+	width: 100%;
+	margin: 0 2px;
+}
+
+.bar-compare {
+	background-color: #ed8936;
+}
+
+.bar-swapp {
+	background-color: #ed8936;
+}
+
+.bar-default {
+	background-color: #2b6cb0;
+}
