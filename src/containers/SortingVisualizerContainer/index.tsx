@@ -1,20 +1,36 @@
+import { Box } from "@chakra-ui/react";
 import React from "react";
-import Sketch from "react-p5";
-import p5types from "p5";
+import Bar from "../../components/atoms/Bar";
+import { Trace } from "../../utils/algorithms/sorting/helpers";
+import styles from "./index.module.css";
 
 interface Props {
-	array: number[];
-	draw: any;
+	animations: Trace[];
+	step: number;
 }
 
-const SortingVisualizerContainer: React.FC<Props> = ({ draw }) => {
-	const setup = (p5: p5types, canvasParentRef: Element) => {
-		console.log(canvasParentRef);
-		p5.createCanvas(1000, 500).parent(canvasParentRef);
-		p5.background(10);
-	};
-
-	return <Sketch setup={setup} draw={draw} />;
+const SortingVisualizerContainer: React.FC<Props> = ({ animations, step }) => {
+	return (
+		<Box
+			bg={"gray.400"}
+			padding="0 16px"
+			className={styles["visualizerContainer"]}
+		>
+			{animations.length &&
+				animations[step].state.map((value, index) => {
+					let isComparing = animations[step].compare.includes(index);
+					let isSwapping = animations[step].swap.includes(index);
+					return (
+						<Bar
+							key={index}
+							value={value}
+							isComparing={isComparing}
+							isSwapping={isSwapping}
+						></Bar>
+					);
+				})}
+		</Box>
+	);
 };
 
 export default SortingVisualizerContainer;
