@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import SortingController from "../../components/organisms/SortingController";
 import { Trace } from "../../utils/algorithms/sorting/helpers";
+import SortingVisualizerContainer from "../SortingVisualizerContainer";
 
 interface Props {
 	sortingAlgorithm: any;
-	render: any;
 }
 
 const genArray = (numElem: number) => {
@@ -16,16 +16,13 @@ const genArray = (numElem: number) => {
 	return arr;
 };
 
-const SortingControllerContainer: React.FC<Props> = ({
-	render,
-	sortingAlgorithm,
-}) => {
+const SortingControllerContainer: React.FC<Props> = ({ sortingAlgorithm }) => {
 	const [array, setArray] = useState<number[]>([]);
 	const [step, setStep] = useState<number>(0);
 	const [animations, setAnimations] = useState<Trace[]>([]);
 	const [isPlaying, setIsPlaying] = useState<boolean>(false);
 	const [numElem, setNumElem] = useState<number>(10);
-	const [sortSpeed, setSortSpeed] = useState<number>(5);
+	const [sortSpeed, setSortSpeed] = useState<number>(1);
 	const intervalId = useRef<NodeJS.Timeout>();
 
 	useEffect(() => {
@@ -40,6 +37,7 @@ const SortingControllerContainer: React.FC<Props> = ({
 	useEffect(() => {
 		if (step >= animations.length - 1) {
 			clearInterval(intervalId.current!);
+			setIsPlaying(false);
 		}
 	}, [step, animations.length]);
 
@@ -57,10 +55,11 @@ const SortingControllerContainer: React.FC<Props> = ({
 	};
 
 	const onPlay = () => {
+		setStep(0);
 		setIsPlaying(true);
 		intervalId.current = setInterval(() => {
 			setStep((step) => step + 1);
-		}, 50);
+		}, 50 / sortSpeed);
 	};
 
 	const onStop = () => {
@@ -77,20 +76,21 @@ const SortingControllerContainer: React.FC<Props> = ({
 		}
 	};
 	return (
-		<SortingController
-			onPlay={onPlay}
-			onRandomize={onRandomize}
-			onStop={onStop}
-			onNext={onNext}
-			onBack={onBack}
-			setNumElem={setNumElem}
-			setSortSpeed={setSortSpeed}
-			isPlaying={isPlaying}
-			numElem={numElem}
-			sortSpeed={sortSpeed}
-		>
-			{render(animations, step)}
-		</SortingController>
+		<>
+			<SortingVisualizerContainer animation={animations[step]} />
+			<SortingController
+				onPlay={onPlay}
+				onRandomize={onRandomize}
+				onStop={onStop}
+				onNext={onNext}
+				onBack={onBack}
+				setNumElem={setNumElem}
+				setSortSpeed={setSortSpeed}
+				isPlaying={isPlaying}
+				numElem={numElem}
+				sortSpeed={sortSpeed}
+			/>
+		</>
 	);
 };
 

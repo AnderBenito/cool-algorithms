@@ -5,21 +5,20 @@ import { Trace } from "../../utils/algorithms/sorting/helpers";
 import styles from "./index.module.css";
 
 interface Props {
-	animations: Trace[];
-	step: number;
+	animation: Trace;
 }
 
-const SortingVisualizerContainer: React.FC<Props> = ({ animations, step }) => {
+const SortingVisualizerContainer: React.FC<Props> = ({ animation }) => {
 	return (
 		<Box
 			bg={"gray.400"}
 			padding="0 16px"
 			className={styles["visualizerContainer"]}
 		>
-			{animations.length &&
-				animations[step].state.map((value, index) => {
-					let isComparing = animations[step].compare.includes(index);
-					let isSwapping = animations[step].swap.includes(index);
+			{animation &&
+				animation.state.map((value, index) => {
+					let isComparing = animation.compare.includes(index);
+					let isSwapping = animation.swap.includes(index);
 					return (
 						<Bar
 							key={index}
