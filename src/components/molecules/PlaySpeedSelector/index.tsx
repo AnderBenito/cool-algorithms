@@ -10,9 +10,10 @@ const PlaySpeedSelector: React.FC<Props> = ({ setSortSpeed, sortSpeed }) => {
 	return (
 		<MySelect
 			placeholder="Animation speed"
+			maxW="200px"
 			value={sortSpeed}
 			options={options}
-			handleSelect={(e) => setSortSpeed(e.target.value)}
+			handleSelect={setSortSpeed}
 		/>
 	);
 };

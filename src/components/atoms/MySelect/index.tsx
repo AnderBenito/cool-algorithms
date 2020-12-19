@@ -3,17 +3,25 @@ import React from "react";
 
 interface Props {
 	options: any[];
-	handleSelect: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+	handleSelect: any;
 }
 const MySelect: React.FC<Props & SelectProps> = ({
 	options,
+	value,
 	handleSelect,
 	...props
 }) => {
 	return (
-		<Select {...props} onChange={handleSelect}>
+		<Select
+			value={options.findIndex((option) => option.value === value)}
+			onChange={(e) => {
+				if (!e.target.value) return;
+				handleSelect(() => options[parseInt(e.target.value)].value);
+			}}
+			{...props}
+		>
 			{options.map((option, index) => (
-				<option key={index} value={option.value}>
+				<option key={index} value={index}>
 					{option.viewValue}
 				</option>
 			))}

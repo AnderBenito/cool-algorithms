@@ -10,9 +10,10 @@ const ArrayLengthSelector: React.FC<Props> = ({ setNumElem, numElem }) => {
 	return (
 		<MySelect
 			placeholder="Array Length"
+			maxW="200px"
 			options={options}
 			value={numElem}
-			handleSelect={(e) => setNumElem(parseInt(e.target.value))}
+			handleSelect={setNumElem}
 		/>
 	);
 };
