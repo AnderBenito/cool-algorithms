@@ -1,4 +1,4 @@
-import { Button, Container } from "@chakra-ui/react";
+import { Button, Container, Flex, Grid, GridItem } from "@chakra-ui/react";
 import React from "react";
 import ArrayLengthSelector from "../../molecules/ArrayLengthSelector";
 import PlayControls from "../../molecules/PlayControls";
@@ -32,23 +32,36 @@ const SortingController: React.FC<Props> = ({
 }) => {
 	return (
 		<Container maxW="6xl">
-			{children}
-			<Button
-				onClick={() => {
-					onRandomize(numElem);
-				}}
-			>
-				Randomize
-			</Button>
-			<ArrayLengthSelector numElem={numElem} setNumElem={setNumElem} />
-			<PlayControls
-				isPlaying={isPlaying}
-				onBack={onBack}
-				onNext={onNext}
-				onPlay={onPlay}
-				onStop={onStop}
-			/>
-			<PlaySpeedSelector setSortSpeed={setSortSpeed} sortSpeed={sortSpeed} />
+			<Grid templateColumns="repeat(3, 1fr)">
+				{children}
+				<GridItem>
+					<Flex>
+						<Button
+							onClick={() => {
+								onRandomize(numElem);
+							}}
+						>
+							Randomize
+						</Button>
+						<ArrayLengthSelector numElem={numElem} setNumElem={setNumElem} />
+					</Flex>
+				</GridItem>
+				<GridItem>
+					<PlayControls
+						isPlaying={isPlaying}
+						onBack={onBack}
+						onNext={onNext}
+						onPlay={onPlay}
+						onStop={onStop}
+					/>
+				</GridItem>
+				<GridItem>
+					<PlaySpeedSelector
+						setSortSpeed={setSortSpeed}
+						sortSpeed={sortSpeed}
+					/>
+				</GridItem>
+			</Grid>
 		</Container>
 	);
 };
