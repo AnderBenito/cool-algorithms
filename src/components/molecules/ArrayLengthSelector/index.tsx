@@ -1,5 +1,5 @@
-import { Select } from "@chakra-ui/react";
 import React from "react";
+import MySelect from "../../atoms/MySelect";
 import { options } from "./options";
 
 interface Props {
@@ -8,17 +8,12 @@ interface Props {
 }
 const ArrayLengthSelector: React.FC<Props> = ({ setNumElem, numElem }) => {
 	return (
-		<Select
-			placeholder="Array length"
-			onChange={(e) => setNumElem(e.target.value)}
+		<MySelect
+			placeholder="Array Length"
+			options={options}
 			value={numElem}
-		>
-			{options.map((option, index) => (
-				<option key={index} value={option.value}>
-					{option.value}
-				</option>
-			))}
-		</Select>
+			handleSelect={(e) => setNumElem(parseInt(e.target.value))}
+		/>
 	);
 };
 

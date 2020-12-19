@@ -1,5 +1,5 @@
-import { Select } from "@chakra-ui/react";
 import React from "react";
+import MySelect from "../../atoms/MySelect";
 import { options } from "./options";
 
 interface Props {
@@ -8,17 +8,12 @@ interface Props {
 }
 const PlaySpeedSelector: React.FC<Props> = ({ setSortSpeed, sortSpeed }) => {
 	return (
-		<Select
-			placeholder="Animation Speed"
-			onChange={(e) => setSortSpeed(e.target.value)}
+		<MySelect
+			placeholder="Animation speed"
 			value={sortSpeed}
-		>
-			{options.map((option, index) => (
-				<option key={index} value={option.value}>
-					{option.viewValue}
-				</option>
-			))}
-		</Select>
+			options={options}
+			handleSelect={(e) => setSortSpeed(e.target.value)}
+		/>
 	);
 };
 
