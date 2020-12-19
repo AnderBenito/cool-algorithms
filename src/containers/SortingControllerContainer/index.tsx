@@ -17,7 +17,6 @@ const genArray = (numElem: number) => {
 };
 
 const SortingControllerContainer: React.FC<Props> = ({ sortingAlgorithm }) => {
-	const [array, setArray] = useState<number[]>([]);
 	const [step, setStep] = useState<number>(0);
 	const [animations, setAnimations] = useState<Trace[]>([]);
 	const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -35,9 +34,11 @@ const SortingControllerContainer: React.FC<Props> = ({ sortingAlgorithm }) => {
 	}, []);
 
 	useEffect(() => {
+		//Finish animation
 		if (step >= animations.length - 1) {
 			clearInterval(intervalId.current!);
 			setIsPlaying(false);
+			console.log("Finish");
 		}
 	}, [step, animations.length]);
 
@@ -50,12 +51,12 @@ const SortingControllerContainer: React.FC<Props> = ({ sortingAlgorithm }) => {
 
 	const generateArray = () => {
 		let arr = genArray(numElem);
-		setArray(arr);
 		setAnimations(sortingAlgorithm(arr));
 	};
 
 	const onPlay = () => {
-		setStep(0);
+		if (step >= animations.length - 1) return;
+
 		setIsPlaying(true);
 		intervalId.current = setInterval(() => {
 			setStep((step) => step + 1);
@@ -68,10 +69,12 @@ const SortingControllerContainer: React.FC<Props> = ({ sortingAlgorithm }) => {
 	};
 
 	const onNext = () => {
-		setStep((step) => step + 1);
+		if (step < animations.length - 1 && !isPlaying) {
+			setStep((step) => step + 1);
+		}
 	};
 	const onBack = () => {
-		if (step > 0) {
+		if (step > 0 && !isPlaying) {
 			setStep((step) => step - 1);
 		}
 	};
