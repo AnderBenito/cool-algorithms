@@ -32,6 +32,12 @@ const bubbleSort = (inputArr: number[]) => {
 		}
 		if (!swapped) break;
 	}
+	animations.push({
+		state: [...copy],
+		compare: [],
+		swap: [],
+	});
+
 	return animations;
 };
 

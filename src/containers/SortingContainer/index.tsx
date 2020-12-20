@@ -7,7 +7,6 @@ import { options } from "./options";
 
 const SortingContainer: React.FC = () => {
 	const [algo, setAlgo] = useState<any>(() => bubbleSort);
-
 	return (
 		<Box>
 			<Text>Select Sorting Algorithm</Text>

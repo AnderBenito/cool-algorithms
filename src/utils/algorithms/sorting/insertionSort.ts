@@ -19,7 +19,7 @@ const insertionSort = (inputArr: number[], speed: number) => {
 			});
 			if (copy[j] < copy[j - 1]) {
 				//swap
-				swap(copy, j, j + 1);
+				swap(copy, j, j - 1);
 
 				animations.push({
 					state: [...copy],
@@ -29,6 +29,11 @@ const insertionSort = (inputArr: number[], speed: number) => {
 			}
 		}
 	}
+	animations.push({
+		state: [...copy],
+		compare: [],
+		swap: [],
+	});
 
 	return animations;
 };
