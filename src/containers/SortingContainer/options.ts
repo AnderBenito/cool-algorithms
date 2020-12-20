@@ -1,3 +1,4 @@
+import { quickSort } from "./../../utils/algorithms/sorting/quickSort";
 import bubbleSort from "../../utils/algorithms/sorting/bubbleSort";
 import insertionSort from "../../utils/algorithms/sorting/insertionSort";
 import mergeSort from "../../utils/algorithms/sorting/mergeSort";
@@ -14,5 +15,9 @@ export const options = [
 	{
 		value: mergeSort,
 		viewValue: "Merge Sort",
+	},
+	{
+		value: quickSort,
+		viewValue: "Quick Sort",
 	},
 ];
