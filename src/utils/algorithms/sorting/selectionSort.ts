@@ -1,17 +1,39 @@
+import { swap, Trace } from "./helpers";
+
 const selectionSort = (inputArr: number[]) => {
-	for (let i = 0; i < inputArr.length; i++) {
+	let animations: Trace[] = [];
+	let copy = [...inputArr];
+
+	animations.push({
+		state: [...copy],
+		compare: [],
+		swap: [],
+	});
+
+	for (let i = 0; i < copy.length; i++) {
 		let minIndex = i;
-		for (let j = i + 1; j < inputArr.length; j++) {
-			if (inputArr[j] < inputArr[minIndex]) {
+		for (let j = i + 1; j < copy.length; j++) {
+			animations.push({
+				state: [...copy],
+				compare: [j, minIndex],
+				swap: [],
+			});
+			if (copy[j] < copy[minIndex]) {
 				minIndex = j;
 			}
 		}
 		if (minIndex !== i) {
-			let tmp = inputArr[i];
-			inputArr[i] = inputArr[minIndex];
-			inputArr[minIndex] = tmp;
+			swap(copy, i, minIndex);
 		}
 	}
+
+	animations.push({
+		state: [...copy],
+		compare: [],
+		swap: [],
+	});
+
+	return animations;
 };
 
 export default selectionSort;
