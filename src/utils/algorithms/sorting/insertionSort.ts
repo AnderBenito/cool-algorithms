@@ -1,4 +1,4 @@
-import { Trace } from "./helpers";
+import { swap, Trace } from "./helpers";
 
 const insertionSort = (inputArr: number[], speed: number) => {
 	let copy = [...inputArr];
@@ -19,9 +19,7 @@ const insertionSort = (inputArr: number[], speed: number) => {
 			});
 			if (copy[j] < copy[j - 1]) {
 				//swap
-				let temp = copy[j];
-				copy[j] = copy[j - 1];
-				copy[j - 1] = temp;
+				swap(copy, j, j + 1);
 
 				animations.push({
 					state: [...copy],

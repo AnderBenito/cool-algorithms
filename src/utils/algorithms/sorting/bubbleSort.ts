@@ -1,4 +1,4 @@
-import { Trace } from "./helpers";
+import { swap, Trace } from "./helpers";
 
 const bubbleSort = (inputArr: number[]) => {
 	const animations: Trace[] = [];
@@ -20,9 +20,7 @@ const bubbleSort = (inputArr: number[]) => {
 			if (copy[j] > copy[j + 1]) {
 				//swap
 				swapped = true;
-				let tmp = copy[j];
-				copy[j] = copy[j + 1];
-				copy[j + 1] = tmp;
+				swap(copy, j, j + 1);
 
 				//Push to the animations
 				animations.push({
