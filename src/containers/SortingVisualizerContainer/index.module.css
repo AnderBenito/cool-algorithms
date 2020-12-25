@@ -1,6 +1,8 @@
 .visualizerContainer {
 	height: 500px;
-	background-color: #555;
+}
+
+.bar-visualizer {
 	display: flex;
 	justify-content: space-between;
 	align-items: flex-end;
