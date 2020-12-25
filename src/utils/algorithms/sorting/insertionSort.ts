@@ -1,4 +1,4 @@
-import { swap, Trace } from "./helpers";
+import { swap, Trace } from "../../helpers";
 
 const insertionSort = (inputArr: number[], speed: number) => {
 	let copy = [...inputArr];

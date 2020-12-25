@@ -1,4 +1,4 @@
-import { swap, Trace } from "./helpers";
+import { swap, Trace } from "../../helpers";
 
 export const quickSort = (inputArr: number[]) => {
 	const animations: Trace[] = [];

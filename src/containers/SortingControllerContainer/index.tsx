@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import SortingController from "../../components/organisms/SortingController";
-import { Trace } from "../../utils/algorithms/sorting/helpers";
+import { Trace } from "../../utils/helpers";
 import PlayingControllerContainer from "../PlayingControllerContainer";
 import SortingVisualizerContainer from "../SortingVisualizerContainer";
 

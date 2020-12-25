@@ -1,4 +1,4 @@
-import { Trace } from "./helpers";
+import { Trace } from "../../helpers";
 const mergeSort = (inputArr: number[]) => {
 	let copy = [...inputArr];
 

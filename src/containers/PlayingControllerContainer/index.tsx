@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import PlayingController from "../../components/organisms/PlayingController";
-import { Trace } from "../../utils/algorithms/sorting/helpers";
+import { Trace } from "../../utils/helpers";
 
 interface Props {
 	render: any;
