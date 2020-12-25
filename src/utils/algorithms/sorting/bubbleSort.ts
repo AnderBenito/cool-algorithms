@@ -1,14 +1,19 @@
-import { swap, Trace } from "./helpers";
+import { swap, Trace } from "../../helpers";
 
 const bubbleSort = (inputArr: number[]) => {
 	const animations: Trace[] = [];
 	const copy = [...inputArr];
+	let accesses = 0;
+	let comparisons = 0;
 
 	animations.push({
 		state: [...copy],
 		compare: [],
 		swap: [],
+		accesses: accesses++,
+		comparisons: comparisons++,
 	});
+
 	for (let i = 0; i < copy.length; i++) {
 		let swapped = false;
 		for (let j = 0; j < copy.length - i - 1; j++) {
@@ -16,6 +21,8 @@ const bubbleSort = (inputArr: number[]) => {
 				state: [...copy],
 				compare: [j, j + 1],
 				swap: [],
+				accesses: accesses++,
+				comparisons: comparisons++,
 			});
 			if (copy[j] > copy[j + 1]) {
 				//swap
@@ -27,6 +34,8 @@ const bubbleSort = (inputArr: number[]) => {
 					state: [...copy],
 					compare: [],
 					swap: [j, j + 1],
+					accesses: accesses++,
+					comparisons: comparisons,
 				});
 			}
 		}
@@ -36,6 +45,8 @@ const bubbleSort = (inputArr: number[]) => {
 		state: [...copy],
 		compare: [],
 		swap: [],
+		accesses: accesses,
+		comparisons: comparisons,
 	});
 
 	return animations;
