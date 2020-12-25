@@ -1,7 +1,8 @@
+import { Info } from "./../../helpers";
 import { swap } from "../../helpers";
 import Trace from "../../trace";
 
-export const quickSort = (inputArr: number[]) => {
+const algo = (inputArr: number[]) => {
 	let copy = [...inputArr];
 	const trace = new Trace(copy);
 
@@ -35,3 +36,15 @@ function partition(arr: number[], l: number, r: number, trace: Trace): number {
 
 	return pivotIndex;
 }
+
+const info: Info = {
+	description: "Quick Sort",
+	cost: "O(logn)",
+};
+
+const quickSort = {
+	algo,
+	info,
+};
+
+export default quickSort;

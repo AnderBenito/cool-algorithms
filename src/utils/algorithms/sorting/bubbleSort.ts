@@ -1,7 +1,7 @@
 import { swap } from "../../helpers";
 import Trace from "../../trace";
 
-const bubbleSort = (inputArr: number[]) => {
+const algo = (inputArr: number[]) => {
 	const copy = [...inputArr];
 	let trace = new Trace(inputArr);
 
@@ -23,6 +23,17 @@ const bubbleSort = (inputArr: number[]) => {
 	trace.add(copy);
 
 	return trace;
+};
+
+const info = {
+	description:
+		"The Bubble Sort algorithm is one of the easiest but slowest algorithms to implement",
+	cost: "O(n)",
+};
+
+const bubbleSort = {
+	algo,
+	info,
 };
 
 export default bubbleSort;

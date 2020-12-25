@@ -1,6 +1,7 @@
+import { Info } from "./../../helpers";
 import Trace from "../../trace";
 
-const mergeSort = (inputArr: number[]) => {
+const algo = (inputArr: number[]) => {
 	let copy = [...inputArr];
 	let trace = new Trace(copy);
 
@@ -58,5 +59,15 @@ function merge(arr: number[], l: number, m: number, r: number, trace: Trace) {
 		k++;
 	}
 }
+
+const info: Info = {
+	description: "Merge sort",
+	cost: "O(logn)",
+};
+
+const mergeSort = {
+	algo,
+	info,
+};
 
 export default mergeSort;

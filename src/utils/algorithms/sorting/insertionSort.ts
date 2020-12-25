@@ -1,7 +1,7 @@
 import { swap } from "../../helpers";
 import Trace from "../../trace";
 
-const insertionSort = (inputArr: number[], speed: number) => {
+const algo = (inputArr: number[], speed: number) => {
 	let copy = [...inputArr];
 	let trace = new Trace(copy);
 
@@ -19,6 +19,17 @@ const insertionSort = (inputArr: number[], speed: number) => {
 	trace.add(copy);
 
 	return trace;
+};
+
+const info = {
+	description:
+		"The Insertion Sort algorithm is one of the easiest but slowest algorithms to implement",
+	cost: "O(n)",
+};
+
+const insertionSort = {
+	algo,
+	info,
 };
 
 export default insertionSort;

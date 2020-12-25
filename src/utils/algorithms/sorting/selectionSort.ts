@@ -1,7 +1,8 @@
+import { Info } from "./../../helpers";
 import { swap } from "../../helpers";
 import Trace from "../../trace";
 
-const selectionSort = (inputArr: number[]) => {
+const algo = (inputArr: number[]) => {
 	let copy = [...inputArr];
 	let trace = new Trace(copy);
 
@@ -23,4 +24,13 @@ const selectionSort = (inputArr: number[]) => {
 	return trace;
 };
 
+const info: Info = {
+	description: "Selection Sort",
+	cost: "",
+};
+
+const selectionSort = {
+	algo,
+	info,
+};
 export default selectionSort;
