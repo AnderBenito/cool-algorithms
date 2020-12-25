@@ -1,10 +1,10 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
 import Bar from "../../components/atoms/Bar";
-import { Trace } from "../../utils/helpers";
+import { Animation } from "../../utils/trace";
 
 interface Props {
-	animation: Trace;
+	animation: Animation;
 }
 
 const SortingVisualizerContainer: React.FC<Props> = ({ animation }) => {
@@ -17,8 +17,10 @@ const SortingVisualizerContainer: React.FC<Props> = ({ animation }) => {
 			flexDirection="column"
 			justifyContent="space-between"
 		>
-			<Box>Array accesses: {animation.accesses}</Box>
-			<Box>Array comparisons: {animation.comparisons}</Box>
+			<Box display="flex" padding="1rem">
+				<Box marginRight="2rem">Array accesses: {animation.accesses}</Box>
+				<Box>Array comparisons: {animation.comparisons}</Box>
+			</Box>
 			<Box display="flex" alignItems="flex-end" justifyContent="space-between">
 				{animation.state.map((value, index) => {
 					let isComparing = animation.compare.includes(index);

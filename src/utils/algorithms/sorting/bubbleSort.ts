@@ -1,55 +1,28 @@
-import { swap, Trace } from "../../helpers";
+import { swap } from "../../helpers";
+import Trace from "../../trace";
 
 const bubbleSort = (inputArr: number[]) => {
-	const animations: Trace[] = [];
 	const copy = [...inputArr];
-	let accesses = 0;
-	let comparisons = 0;
-
-	animations.push({
-		state: [...copy],
-		compare: [],
-		swap: [],
-		accesses: accesses++,
-		comparisons: comparisons++,
-	});
+	let trace = new Trace(inputArr);
 
 	for (let i = 0; i < copy.length; i++) {
 		let swapped = false;
 		for (let j = 0; j < copy.length - i - 1; j++) {
-			animations.push({
-				state: [...copy],
-				compare: [j, j + 1],
-				swap: [],
-				accesses: accesses++,
-				comparisons: comparisons++,
-			});
+			trace.add(copy, [j, j + 1], []);
 			if (copy[j] > copy[j + 1]) {
 				//swap
 				swapped = true;
 				swap(copy, j, j + 1);
 
 				//Push to the animations
-				animations.push({
-					state: [...copy],
-					compare: [],
-					swap: [j, j + 1],
-					accesses: accesses++,
-					comparisons: comparisons,
-				});
+				trace.add(copy, [], [j, j + 1]);
 			}
 		}
 		if (!swapped) break;
 	}
-	animations.push({
-		state: [...copy],
-		compare: [],
-		swap: [],
-		accesses: accesses,
-		comparisons: comparisons,
-	});
+	trace.add(copy);
 
-	return animations;
+	return trace;
 };
 
 export default bubbleSort;

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import SortingController from "../../components/organisms/SortingController";
-import { Trace } from "../../utils/helpers";
+import Trace, { Animation } from "../../utils/trace";
 import PlayingControllerContainer from "../PlayingControllerContainer";
 import SortingVisualizerContainer from "../SortingVisualizerContainer";
 
@@ -22,19 +22,19 @@ const genArray = (numElem: number) => {
 };
 
 const SortingControllerContainer: React.FC<Props> = ({ sortingAlgorithm }) => {
-	const [animations, setAnimations] = useState<Trace[]>([]);
+	const [trace, setTrace] = useState<Trace>();
 	const [numElem, setNumElem] = useState<number>(DEFAULT_LENGTH);
 	const array = useRef<number[]>(genArray(DEFAULT_LENGTH));
 
 	useEffect(() => {
-		setAnimations(sortingAlgorithm(array.current));
+		setTrace(sortingAlgorithm(array.current));
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [sortingAlgorithm]);
 
 	const generateArray = () => {
 		let arr = genArray(numElem);
 		array.current = arr;
-		setAnimations(sortingAlgorithm(arr));
+		setTrace(sortingAlgorithm(arr));
 	};
 	const onRandomize = () => {
 		generateArray();
@@ -46,12 +46,14 @@ const SortingControllerContainer: React.FC<Props> = ({ sortingAlgorithm }) => {
 				onRandomize={onRandomize}
 				setNumElem={setNumElem}
 			/>
-			<PlayingControllerContainer
-				animations={animations}
-				render={(animation: Trace) => (
-					<SortingVisualizerContainer animation={animation} />
-				)}
-			/>
+			{trace && (
+				<PlayingControllerContainer
+					trace={trace}
+					render={(animation: Animation) => (
+						<SortingVisualizerContainer animation={animation} />
+					)}
+				/>
+			)}
 		</>
 	);
 };

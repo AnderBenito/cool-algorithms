@@ -1,23 +1,14 @@
-import { swap, Trace } from "../../helpers";
+import { swap } from "../../helpers";
+import Trace from "../../trace";
 
 const selectionSort = (inputArr: number[]) => {
-	let animations: Trace[] = [];
 	let copy = [...inputArr];
-
-	animations.push({
-		state: [...copy],
-		compare: [],
-		swap: [],
-	});
+	let trace = new Trace(copy);
 
 	for (let i = 0; i < copy.length; i++) {
 		let minIndex = i;
 		for (let j = i + 1; j < copy.length; j++) {
-			animations.push({
-				state: [...copy],
-				compare: [j, minIndex],
-				swap: [],
-			});
+			trace.add(copy, [j, minIndex], []);
 			if (copy[j] < copy[minIndex]) {
 				minIndex = j;
 			}
@@ -27,13 +18,9 @@ const selectionSort = (inputArr: number[]) => {
 		}
 	}
 
-	animations.push({
-		state: [...copy],
-		compare: [],
-		swap: [],
-	});
+	trace.add(copy);
 
-	return animations;
+	return trace;
 };
 
 export default selectionSort;

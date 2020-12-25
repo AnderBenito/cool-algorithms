@@ -1,59 +1,34 @@
-import { swap, Trace } from "../../helpers";
+import { swap } from "../../helpers";
+import Trace from "../../trace";
 
 export const quickSort = (inputArr: number[]) => {
-	const animations: Trace[] = [];
-
 	let copy = [...inputArr];
-	animations.push({
-		state: [...copy],
-		compare: [],
-		swap: [],
-	});
-	quickSortFunction(copy, 0, copy.length - 1, animations);
-	animations.push({
-		state: [...copy],
-		compare: [],
-		swap: [],
-	});
+	const trace = new Trace(copy);
 
-	return animations;
+	quickSortFunction(copy, 0, copy.length - 1, trace);
+	trace.add(copy);
+
+	return trace;
 };
 
-function quickSortFunction(
-	arr: number[],
-	l: number,
-	r: number,
-	animations: Trace[]
-) {
+function quickSortFunction(arr: number[], l: number, r: number, trace: Trace) {
 	if (l >= r) return;
 
-	let index = partition(arr, l, r, animations);
-	quickSortFunction(arr, l, index - 1, animations);
-	quickSortFunction(arr, index + 1, r, animations);
+	let index = partition(arr, l, r, trace);
+	quickSortFunction(arr, l, index - 1, trace);
+	quickSortFunction(arr, index + 1, r, trace);
 }
 
-function partition(
-	arr: number[],
-	l: number,
-	r: number,
-	animations: Trace[]
-): number {
+function partition(arr: number[], l: number, r: number, trace: Trace): number {
 	let pivotIndex = l;
 
 	for (let i = l; i < r; i++) {
-		animations.push({
-			state: [...arr],
-			compare: [i, r],
-			swap: [],
-		});
+		trace.add(arr, [i, r], []);
 		if (arr[i] < arr[r]) {
 			swap(arr, i, pivotIndex);
 			pivotIndex++;
-			animations.push({
-				state: [...arr],
-				compare: [],
-				swap: [i, pivotIndex],
-			});
+
+			trace.add(arr, [], [i, pivotIndex]);
 		}
 	}
 	swap(arr, r, pivotIndex);

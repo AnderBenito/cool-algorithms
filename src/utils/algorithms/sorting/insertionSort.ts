@@ -1,41 +1,24 @@
-import { swap, Trace } from "../../helpers";
+import { swap } from "../../helpers";
+import Trace from "../../trace";
 
 const insertionSort = (inputArr: number[], speed: number) => {
 	let copy = [...inputArr];
-	let animations: Trace[] = [];
-
-	animations.push({
-		state: [...copy],
-		compare: [],
-		swap: [],
-	});
+	let trace = new Trace(copy);
 
 	for (let i = 1; i < copy.length; i++) {
 		for (let j = i; j >= 0; j--) {
-			animations.push({
-				state: [...copy],
-				compare: [j, j - 1],
-				swap: [],
-			});
+			trace.add(copy, [j, j - 1], []);
 			if (copy[j] < copy[j - 1]) {
 				//swap
 				swap(copy, j, j - 1);
 
-				animations.push({
-					state: [...copy],
-					compare: [],
-					swap: [j, j - 1],
-				});
+				trace.add(copy, [], [j, j - 1]);
 			}
 		}
 	}
-	animations.push({
-		state: [...copy],
-		compare: [],
-		swap: [],
-	});
+	trace.add(copy);
 
-	return animations;
+	return trace;
 };
 
 export default insertionSort;

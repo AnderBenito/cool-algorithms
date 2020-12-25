@@ -1,16 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import PlayingController from "../../components/organisms/PlayingController";
-import { Trace } from "../../utils/helpers";
+import Trace from "../../utils/trace";
 
 interface Props {
 	render: any;
-	animations: Trace[];
+	trace: Trace;
 }
 
-const PlayingControllerContainer: React.FC<Props> = ({
-	render,
-	animations,
-}) => {
+const PlayingControllerContainer: React.FC<Props> = ({ render, trace }) => {
 	const [step, setStep] = useState<number>(0);
 	const [isPlaying, setIsPlaying] = useState<boolean>(false);
 	const [sortSpeed, setSortSpeed] = useState<number>(1);
@@ -25,16 +22,16 @@ const PlayingControllerContainer: React.FC<Props> = ({
 
 	useEffect(() => {
 		resetAnimation();
-	}, [animations]);
+	}, [trace]);
 
 	useEffect(() => {
 		//Finish animation
-		if (step >= animations.length - 1) {
+		if (step >= trace.animations.length - 1) {
 			clearInterval(intervalId.current!);
 			setIsPlaying(false);
 			console.log("Finish");
 		}
-	}, [step, animations.length]);
+	}, [step, trace.animations.length]);
 
 	const resetAnimation = () => {
 		setStep(0);
@@ -43,7 +40,7 @@ const PlayingControllerContainer: React.FC<Props> = ({
 	};
 
 	const onPlay = () => {
-		if (step >= animations.length - 1) return;
+		if (step >= trace.animations.length - 1) return;
 
 		setIsPlaying(true);
 		intervalId.current = setInterval(() => {
@@ -57,7 +54,7 @@ const PlayingControllerContainer: React.FC<Props> = ({
 	};
 
 	const onNext = () => {
-		if (step < animations.length - 1 && !isPlaying) {
+		if (step < trace.animations.length - 1 && !isPlaying) {
 			setStep((step) => step + 1);
 		}
 	};
@@ -68,7 +65,7 @@ const PlayingControllerContainer: React.FC<Props> = ({
 	};
 	return (
 		<>
-			{render(animations[step])}
+			{render(trace.animations[step])}
 			<PlayingController
 				onPlay={onPlay}
 				onStop={onStop}

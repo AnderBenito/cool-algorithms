@@ -1,46 +1,25 @@
-import { Trace } from "../../helpers";
+import Trace from "../../trace";
+
 const mergeSort = (inputArr: number[]) => {
 	let copy = [...inputArr];
+	let trace = new Trace(copy);
 
-	let animations: Trace[] = [];
-	animations.push({
-		state: [...copy],
-		compare: [],
-		swap: [],
-	});
-	mergeSortFunction(copy, 0, copy.length - 1, animations);
+	mergeSortFunction(copy, 0, copy.length - 1, trace);
+	trace.add(copy);
 
-	return animations;
+	return trace;
 };
 
-function mergeSortFunction(
-	arr: number[],
-	l: number,
-	r: number,
-	animations: Trace[]
-) {
+function mergeSortFunction(arr: number[], l: number, r: number, trace: Trace) {
 	if (r > l) {
 		let m = Math.floor((l + r) / 2);
-		// console.log("Left side", arr.slice(l, m));
-		// console.log("Right side", arr.slice(m, r));
-		mergeSortFunction(arr, l, m, animations);
-		mergeSortFunction(arr, m + 1, r, animations);
-		merge(arr, l, m, r, animations);
-		animations.push({
-			state: [...arr],
-			compare: [],
-			swap: [],
-		});
+		mergeSortFunction(arr, l, m, trace);
+		mergeSortFunction(arr, m + 1, r, trace);
+		merge(arr, l, m, r, trace);
 	}
 }
 
-function merge(
-	arr: number[],
-	l: number,
-	m: number,
-	r: number,
-	animations: Trace[]
-) {
+function merge(arr: number[], l: number, m: number, r: number, trace: Trace) {
 	let i = 0;
 	let j = 0;
 	let k = l;
@@ -56,11 +35,7 @@ function merge(
 	}
 
 	while (i < tempLeft.length && j < tempRight.length) {
-		animations.push({
-			state: [...arr],
-			compare: [i + l, j + m + 1],
-			swap: [],
-		});
+		trace.add(arr, [i + l, j + m + 1], []);
 		if (tempLeft[i] <= tempRight[j]) {
 			arr[k] = tempLeft[i];
 			i++;
