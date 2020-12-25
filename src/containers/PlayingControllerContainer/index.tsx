@@ -71,6 +71,7 @@ const PlayingControllerContainer: React.FC<Props> = ({ render, trace }) => {
 				onStop={onStop}
 				onNext={onNext}
 				onBack={onBack}
+				onReset={resetAnimation}
 				setSortSpeed={setSortSpeed}
 				isPlaying={isPlaying}
 				sortSpeed={sortSpeed}

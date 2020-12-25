@@ -1,4 +1,5 @@
-import { Container, Grid, GridItem } from "@chakra-ui/react";
+import { Button, Container, Grid, GridItem } from "@chakra-ui/react";
+import { FaSyncAlt } from "react-icons/fa";
 import React from "react";
 import PlayControls from "../../molecules/PlayControls";
 import PlaySpeedSelector from "../../molecules/PlaySpeedSelector";
@@ -8,6 +9,7 @@ interface Props {
 	onPlay: any;
 	onNext: any;
 	onBack: any;
+	onReset: any;
 	setSortSpeed: any;
 	isPlaying: boolean;
 	sortSpeed: number;
@@ -18,16 +20,19 @@ const PlayingController: React.FC<Props> = ({
 	onBack,
 	onNext,
 	onStop,
+	onReset,
 	setSortSpeed,
 	isPlaying,
 	sortSpeed,
-	children,
 }) => {
 	return (
-		<Container maxW="6xl">
-			<Grid templateColumns="repeat(2, 1fr)">
-				{children}
-
+		<Container maxW="2xl" marginTop="1rem">
+			<Grid templateColumns="repeat(3, 1fr)" justifyItems="center">
+				<GridItem justifySelf="right">
+					<Button onClick={onReset}>
+						<FaSyncAlt />
+					</Button>
+				</GridItem>
 				<GridItem>
 					<PlayControls
 						isPlaying={isPlaying}
@@ -37,7 +42,7 @@ const PlayingController: React.FC<Props> = ({
 						onStop={onStop}
 					/>
 				</GridItem>
-				<GridItem>
+				<GridItem justifySelf="left">
 					<PlaySpeedSelector
 						setSortSpeed={setSortSpeed}
 						sortSpeed={sortSpeed}

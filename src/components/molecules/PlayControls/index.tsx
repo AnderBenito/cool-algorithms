@@ -1,4 +1,5 @@
-import { Button } from "@chakra-ui/react";
+import { Button, Flex } from "@chakra-ui/react";
+import { FaPlay, FaPause, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import React from "react";
 
 interface Props {
@@ -16,15 +17,17 @@ const PlayControls: React.FC<Props> = ({
 	onStop,
 }) => {
 	return (
-		<>
-			<Button onClick={onBack}>Back</Button>
-			{!isPlaying ? (
-				<Button onClick={onPlay}>Play</Button>
-			) : (
-				<Button onClick={onStop}>Stop</Button>
-			)}
-			<Button onClick={onNext}>Next</Button>
-		</>
+		<Flex>
+			<Button onClick={onBack} variant="ghost">
+				<FaChevronLeft />
+			</Button>
+			<Button onClick={isPlaying ? onStop : onPlay} borderRadius="100%">
+				{isPlaying ? <FaPause /> : <FaPlay />}
+			</Button>
+			<Button onClick={onNext} variant="ghost">
+				<FaChevronRight />
+			</Button>
+		</Flex>
 	);
 };
 
