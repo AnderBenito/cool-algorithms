@@ -11,7 +11,7 @@ const SortingVisualizerContainer: React.FC<Props> = ({ animation }) => {
 	if (!animation) return <Box>Error</Box>;
 	return (
 		<Box
-			bg={"gray.400"}
+			bg={"gray.200"}
 			height="500px"
 			display="flex"
 			flexDirection="column"
